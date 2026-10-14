@@ -41,11 +41,21 @@ for (const courtyard of fixtures) {
     const bounds = getComprehensivePcbBounds([courtyard])
     expect(bounds.hasBounds).toBe(true)
     expect(bounds.hasBoardBounds).toBe(false)
-    expect(bounds.minX).toBe(20)
-    expect(bounds.maxX).toBe(28)
-    expect(bounds.minY).toBe(courtyard.type === "pcb_courtyard_circle" ? 9 : 10)
-    expect(bounds.maxY).toBe(
-      courtyard.type === "pcb_courtyard_circle" ? 17 : 16,
+    expect(bounds.minX).toBeCloseTo(
+      courtyard.type === "pcb_courtyard_circle" ? 19.975 : 20,
+      6,
+    )
+    expect(bounds.maxX).toBeCloseTo(
+      courtyard.type === "pcb_courtyard_circle" ? 28.025 : 28,
+      6,
+    )
+    expect(bounds.minY).toBeCloseTo(
+      courtyard.type === "pcb_courtyard_circle" ? 8.975 : 10,
+      6,
+    )
+    expect(bounds.maxY).toBeCloseTo(
+      courtyard.type === "pcb_courtyard_circle" ? 17.025 : 16,
+      6,
     )
 
     const svg = convertCircuitJsonToPcbSvg([courtyard], {

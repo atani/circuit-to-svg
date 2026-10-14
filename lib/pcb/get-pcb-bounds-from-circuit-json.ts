@@ -93,6 +93,31 @@ export function getComprehensivePcbBounds(
         width: circuitJsonElm.radius * 2,
         height: circuitJsonElm.radius * 2,
       })
+      if (
+        Number.isFinite(circuitJsonElm.center?.x) &&
+        Number.isFinite(circuitJsonElm.center?.y) &&
+        Number.isFinite(circuitJsonElm.radius) &&
+        circuitJsonElm.radius > 0
+      ) {
+        // 描画時の固定線幅0.05mmの半分を、円の外周へ含めます。
+        const outerRadius = circuitJsonElm.radius + 0.025
+        const diameter = outerRadius * 2
+        if (
+          [
+            diameter,
+            circuitJsonElm.center.x - outerRadius,
+            circuitJsonElm.center.x + outerRadius,
+            circuitJsonElm.center.y - outerRadius,
+            circuitJsonElm.center.y + outerRadius,
+          ].every(Number.isFinite)
+        ) {
+          updateBounds({
+            center: circuitJsonElm.center,
+            width: diameter,
+            height: diameter,
+          })
+        }
+      }
     } else if (circuitJsonElm.type === "pcb_courtyard_polygon") {
       updateBoundsToIncludeOutline(circuitJsonElm.points)
     } else if (circuitJsonElm.type === "pcb_courtyard_outline") {
