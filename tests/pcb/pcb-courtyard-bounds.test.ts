@@ -42,19 +42,27 @@ for (const courtyard of fixtures) {
     expect(bounds.hasBounds).toBe(true)
     expect(bounds.hasBoardBounds).toBe(false)
     expect(bounds.minX).toBeCloseTo(
-      courtyard.type === "pcb_courtyard_circle" ? 19.975 : 20,
+      courtyard.type === "pcb_courtyard_outline" ? 20 : 19.975,
       6,
     )
     expect(bounds.maxX).toBeCloseTo(
-      courtyard.type === "pcb_courtyard_circle" ? 28.025 : 28,
+      courtyard.type === "pcb_courtyard_outline" ? 28 : 28.025,
       6,
     )
     expect(bounds.minY).toBeCloseTo(
-      courtyard.type === "pcb_courtyard_circle" ? 8.975 : 10,
+      courtyard.type === "pcb_courtyard_circle"
+        ? 8.975
+        : courtyard.type === "pcb_courtyard_polygon"
+          ? 9.975
+          : 10,
       6,
     )
     expect(bounds.maxY).toBeCloseTo(
-      courtyard.type === "pcb_courtyard_circle" ? 17.025 : 16,
+      courtyard.type === "pcb_courtyard_circle"
+        ? 17.025
+        : courtyard.type === "pcb_courtyard_polygon"
+          ? 16.025
+          : 16,
       6,
     )
 

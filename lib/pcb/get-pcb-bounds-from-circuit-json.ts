@@ -120,6 +120,26 @@ export function getComprehensivePcbBounds(
       }
     } else if (circuitJsonElm.type === "pcb_courtyard_polygon") {
       updateBoundsToIncludeOutline(circuitJsonElm.points)
+      const points = circuitJsonElm.points
+      const firstPoint = points[0]
+      if (
+        firstPoint &&
+        points.length >= 2 &&
+        points.every(
+          (point) => Number.isFinite(point.x) && Number.isFinite(point.y),
+        ) &&
+        points.some(
+          (point) => point.x !== firstPoint.x || point.y !== firstPoint.y,
+        )
+      ) {
+        // round joinの固定線幅0.05mmを含め、名目の点列境界を維持します。
+        for (const point of points) {
+          minX = Math.min(minX, point.x - 0.025)
+          minY = Math.min(minY, point.y - 0.025)
+          maxX = Math.max(maxX, point.x + 0.025)
+          maxY = Math.max(maxY, point.y + 0.025)
+        }
+      }
     } else if (circuitJsonElm.type === "pcb_courtyard_outline") {
       updateBoundsToIncludeOutline(circuitJsonElm.outline)
     } else if (circuitJsonElm.type === "pcb_soldermask_opening") {

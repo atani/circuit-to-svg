@@ -321,7 +321,7 @@ test("board physical dimensions and camera stay nominal", () => {
     }),
   )
 })
-test("pads and nominal courtyard polygons stay unchanged", () => {
+test("pads stay nominal and polygon bounds include stroke", () => {
   const b = getComprehensivePcbBounds([pad])
   expect([b.minX, b.maxX, b.minY, b.maxY]).toEqual([-1, 1, -1, 1])
   const polygon = {
@@ -336,5 +336,7 @@ test("pads and nominal courtyard polygons stay unchanged", () => {
     ],
   } as AnyCircuitElement
   const n = getComprehensivePcbBounds([polygon])
-  expect([n.minX, n.maxX, n.minY, n.maxY]).toEqual([0, 4, 0, 2])
+  expect([n.minX, n.maxX, n.minY, n.maxY]).toEqual([
+    -0.025, 4.025, -0.025, 2.025,
+  ])
 })
