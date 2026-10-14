@@ -404,7 +404,7 @@ test("physical board and automatic camera remain nominal", () => {
     }),
   )
 })
-test("physical pad and courtyard outline stay nominal", () => {
+test("physical pad stays nominal and outline includes stroke bounds", () => {
   const p = getComprehensivePcbBounds([pad])
   expect([p.minX, p.maxX, p.minY, p.maxY]).toEqual([-1, 1, -1, 1])
   const outline = {
@@ -415,5 +415,7 @@ test("physical pad and courtyard outline stay nominal", () => {
     outline: shapes.rect,
   } as AnyCircuitElement
   const b = getComprehensivePcbBounds([outline])
-  expect([b.minX, b.maxX, b.minY, b.maxY]).toEqual([0, 4, 0, 2])
+  expect([b.minX, b.maxX, b.minY, b.maxY]).toEqual([
+    -0.025, 4.025, -0.025, 2.025,
+  ])
 })

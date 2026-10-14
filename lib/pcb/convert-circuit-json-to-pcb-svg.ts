@@ -276,7 +276,8 @@ export function convertCircuitJsonToPcbSvg(
     if (
       (element.type === "pcb_courtyard_rect" ||
         element.type === "pcb_courtyard_circle" ||
-        element.type === "pcb_courtyard_polygon") &&
+        element.type === "pcb_courtyard_polygon" ||
+        element.type === "pcb_courtyard_outline") &&
       !options?.showCourtyards
     )
       return false

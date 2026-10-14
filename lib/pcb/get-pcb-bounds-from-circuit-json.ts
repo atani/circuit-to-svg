@@ -118,9 +118,15 @@ export function getComprehensivePcbBounds(
           })
         }
       }
-    } else if (circuitJsonElm.type === "pcb_courtyard_polygon") {
-      updateBoundsToIncludeOutline(circuitJsonElm.points)
-      const points = circuitJsonElm.points
+    } else if (
+      circuitJsonElm.type === "pcb_courtyard_polygon" ||
+      circuitJsonElm.type === "pcb_courtyard_outline"
+    ) {
+      const points =
+        circuitJsonElm.type === "pcb_courtyard_polygon"
+          ? circuitJsonElm.points
+          : circuitJsonElm.outline
+      updateBoundsToIncludeOutline(points)
       const firstPoint = points[0]
       if (
         firstPoint &&
@@ -140,8 +146,6 @@ export function getComprehensivePcbBounds(
           maxY = Math.max(maxY, point.y + 0.025)
         }
       }
-    } else if (circuitJsonElm.type === "pcb_courtyard_outline") {
-      updateBoundsToIncludeOutline(circuitJsonElm.outline)
     } else if (circuitJsonElm.type === "pcb_soldermask_opening") {
       if (circuitJsonElm.shape === "polygon") {
         updateTraceBounds(circuitJsonElm.points)
